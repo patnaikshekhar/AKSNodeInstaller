@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sample-installer-config
+  namespace: node-installer
+data:
+  install.sh: |
+    #!/bin/bash
+
+    # Update and install packages
+    apt-get update
+    apt-get install fortune -y

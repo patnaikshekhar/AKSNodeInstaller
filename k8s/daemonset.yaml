@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: node-installer
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: installer
+  namespace: node-installer
+spec:
+  selector:
+    matchLabels:
+      job: installer
+  template:
+    metadata:
+      labels:
+        job: installer
+    spec:
+      hostPID: true
+      restartPolicy: Always
+      containers:
+      - image: patnaikshekhar/node-installer:1.3
+        name: installer
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - name: install-script
+          mountPath: /tmp
+        - name: host-mount
+          mountPath: /host
+      volumes:
+      - name: install-script
+        configMap:
+          name: sample-installer-config
+      - name: host-mount
+        hostPath:
+          path: /tmp/install
