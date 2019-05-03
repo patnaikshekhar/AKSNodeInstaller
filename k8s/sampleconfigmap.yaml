@@ -9,4 +9,4 @@ data:
 
     # Update and install packages
     apt-get update
-    apt-get install fortune -y
+    apt-get install cowsay -y
